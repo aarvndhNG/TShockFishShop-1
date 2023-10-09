@@ -10,7 +10,7 @@ namespace FishShop;
 public class Config
 {
     // 商店名称
-    public string name = "鱼店";
+    public string name = "FishShop";
 
     // 货架展示容量
     public int pageSlots = 40;
