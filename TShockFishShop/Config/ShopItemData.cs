@@ -68,7 +68,7 @@ public class ShopItemData
             if (cmds.Count > 0)
             {
                 if (string.IsNullOrEmpty(name))
-                    name = "指令";
+                    name = "instruction";
             }
             else if (!string.IsNullOrEmpty(prefix))
             {
@@ -78,7 +78,7 @@ public class ShopItemData
         else if (id == ShopItemID.Buff)
         {
             if (string.IsNullOrEmpty(name))
-                name = "增益";
+                name = "Gain";
         }
 
         // 执行指令
@@ -201,7 +201,7 @@ public class ShopItemData
             int _id = d.id;
             if (_id == 0 || _id > ItemID.Count)
             {
-                utils.Log($"[CheckCost]物品id{_id}无效");
+                utils.Log($"[CheckCost] Item id{_id} is invalid");
                 continue;
             }
 
@@ -253,10 +253,10 @@ public class ShopItemData
             {
                 switch (data.name)
                 {
-                    case "铜币": case "铜": id = 71; break;
-                    case "银币": case "银": id = 72; break;
-                    case "金币": case "金": id = 73; break;
-                    case "铂金币": case "铂金": case "铂": id = 74; break;
+                    case "copper coin": case "copper": id = 71; break;
+                    case "silver coin": case "silver": id = 72; break;
+                    case "gold coin": case "gold": id = 73; break;
+                    case "platinum coin": case "platinum": case "platinum": id = 74; break;
                 }
             }
             switch (data.id)
@@ -317,7 +317,7 @@ public class ShopItemData
         // 执行指令
         List<string> cmds = GetCostCMD();
         if (cmds.Count > 0)
-            msg += " 执行" + string.Join(",", GetCostCMD());
+            msg += " implement" + string.Join(",", GetCostCMD());
 
         // 任意类型的物品
         // string s = GetAnyItemDesc();
@@ -325,7 +325,7 @@ public class ShopItemData
         //     msg += $"{s} ";
         if (id == ShopItemID.DirtiestBlock)
         {
-            msg += ", 臭臭仪式";
+            msg += ", stinky ritual";
         }
         return msg;
     }
@@ -355,7 +355,7 @@ public class ShopItemData
     public string GetAllowGroupDesc()
     {
         if (allowGroup.Count > 0)
-            return $"仅 {string.Join("、", allowGroup)} 用户组";
+            return $"{string.Join(",", allowGroup)} user groups only";
         else
             return "";
     }
@@ -372,12 +372,12 @@ public class ShopItemData
         if (limit > 0)
         {
             int count1 = Math.Max(0, Records.GetPlayerRecord(op, id));
-            msgs.Add($"个人 {count1}/{limit}");
+            msgs.Add($"personal{count1}/{limit}");
         }
         if (serverLimit > 0)
         {
             int count2 = Math.Max(0, Records.CountShopItemRecord(id));
-            msgs.Add($"全服 {count2}/{serverLimit}");
+            msgs.Add($"All servers {count2}/{serverLimit}");
         }
 
         return string.Join(", ", msgs);
