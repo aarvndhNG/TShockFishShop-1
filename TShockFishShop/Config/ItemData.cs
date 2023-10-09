@@ -62,7 +62,7 @@ public class ItemData
                 id = ShopItemID.GetIDByName(name);
 
             if (id == 0)
-                utils.Log($"ItemData fixID 错误");
+                utils.Log($"ItemData fixID mistake");
         }
         if (stack == 0)
             stack = 1;
