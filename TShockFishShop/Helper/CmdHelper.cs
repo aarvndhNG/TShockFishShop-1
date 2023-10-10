@@ -477,7 +477,7 @@ namespace FishShop
                         TShock.Players[i].SendSuccessMessage(string.Format("{0} Teleport you to him", op.Name));
                 }
             }
-            TSPlayer.All.SendInfoMessage($"{op.Name} Purchased to gather for a group fight and summon all players to his side"");
+            TSPlayer.All.SendInfoMessage($"{op.Name} Purchased to gather for a group fight and summon all players to his side");
         }
 
         // 集体庆祝
