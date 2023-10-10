@@ -1,241 +1,235 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 
 namespace FishShop
 {
     /// <summary>
-    /// 交易物品ID
-    /// 说明：商品ID、解锁ID、交易物品ID 共用一套id规则，部分id即使解锁ID又是商品ID。
+    /// Transaction Item ID
+    /// Description: Product IDs, unlock IDs, and transaction item IDs share the same ID rules; some IDs are both unlock and product IDs.
     /// </summary>
     public class CostID
     {
-        public const int QuestFish = -101;              // 当天任务鱼
-        public const int AnyQuestFish = -102;           // 任意任务鱼
-        public const int AnyFish = -103;                // 任意鱼
+        public const int QuestFish = -101;          // Today's quest fish
+        public const int AnyQuestFish = -102;       // Any quest fish
+        public const int AnyFish = -103;            // Any fish
 
-        public const int AnyWood = -200;                // 任意木材
-        public const int AnyTorch = -201;               // 任意火把
-        public const int AnyIronBar = -202;             // 任意铁锭
-        public const int AnySand = -203;                // 任意沙块
-        public const int AnyPressurePlate = -204;       // 任意压力板
-        public const int AnyBird = -205;                // 任意鸟
-        public const int AnyScorpion = -206;            // 任意蝎子
-        public const int AnySquirrel = -207;            // 任意松鼠
-        public const int AnyJungleBug = -208;           // 任意丛林虫子
-        public const int AnyDuck = -209;                // 任意鸭子
-        public const int AnyButterfly = -210;           // 任意蝴蝶
-        public const int AnyFirefly = -211;             // 任意萤火虫
-        public const int AnySnail = -212;               // 任意蜗牛
-        public const int AnyTurtle = -213;              // 任意乌龟
-        public const int AnyMacaw = -214;               // 任意金刚鹦鹉
-        public const int AnyCockatiel = -215;           // 任意玄凤鹦鹉
-        public const int AnyDragonfly = -216;           // 任意蜻蜓
-        public const int AnyFruit = -217;               // 任意水果
-        public const int AnyBalloon = -218;             // 任意气球
-        public const int AnyCloudBalloon = -219;        // 任意云朵气球
-        public const int AnyBlizzardBalloon = -220;     // 任意暴雪气球
-        public const int AnySandstormBalloon = -221;    // 任意沙暴气球
+        public const int AnyWood = -200;            // Any wood
+        public const int AnyTorch = -201;           // Any torch
+        public const int AnyIronBar = -202;         // Any iron bar
+        public const int AnySand = -203;            // Any sand block
+        public const int AnyPressurePlate = -204;   // Any pressure plate
+        public const int AnyBird = -205;            // Any bird
+        public const int AnyScorpion = -206;        // Any scorpion
+        public const int AnySquirrel = -207;        // Any squirrel
+        public const int AnyJungleBug = -208;       // Any jungle bug
+        public const int AnyDuck = -209;            // Any duck
+        public const int AnyButterfly = -210;       // Any butterfly
+        public const int AnyFirefly = -211;         // Any firefly
+        public const int AnySnail = -212;           // Any snail
+        public const int AnyTurtle = -213;          // Any turtle
+        public const int AnyMacaw = -214;           // Any macaw
+        public const int AnyCockatiel = -215;       // Any cockatiel
+        public const int AnyDragonfly = -216;       // Any dragonfly
+        public const int AnyFruit = -217;           // Any fruit
+        public const int AnyBalloon = -218;         // Any balloon
+        public const int AnyCloudBalloon = -219;    // Any cloud balloon
+        public const int AnyBlizzardBalloon = -220; // Any blizzard balloon
+        public const int AnySandstormBalloon = -221; // Any sandstorm balloon
 
+        public const int AnyHorseshoeBalloon = -222;    // Any horseshoe balloon
+        public const int AnyCrate = -223;               // Any crate
+        public const int AnyTombstone = -224;           // Any tombstone
+        public const int AnyGoldCritter = -225;         // Any gold critter
+        public const int AnyParrot = -226;              // Any parrot
 
-        public const int AnyHorseshoeBalloon = -222;    // 任意马掌气球
-        public const int AnyCrate = -223;               // 任意宝匣
-        public const int AnyTombstone = -224;           // 任意墓碑
-        public const int AnyGoldCritter = -225;         // 任意金色小动物
-        public const int AnyParrot = -226;              // 任意鹦鹉
-
-        #region id集合
-        // 任意任务鱼 Main.anglerQuestItemNetIDs
-        // 任意宝匣 ItemID.Sets.IsFishingCrate
-
-        /// <summary>
-        /// 任意鱼
-        /// </summary>
-        public static readonly int[] Fishes = new int[] { 2303, 2299, 2290, 2317, 2305, 2304, 2313, 2318, 2312, 4401, 2306, 2308, 2319, 2314, 2302, 2315, 2307, 2310, 2301, 4402, 2298, 2316, 2309, 2321, 2297, 2300, 2311 };
+        #region ID Collections
+        // Any Quest Fish: Main.anglerQuestItemNetIDs
+        // Any Crate: ItemID.Sets.IsFishingCrate
 
         /// <summary>
-        /// 任意墓碑
+        /// Any fish
         /// </summary>
-        public static readonly int[] Tombstones = new int[] { 321, 1173, 1174, 1175, 1176, 1177, 3230, 3231, 3229, 3233, 3232 };
+        public static readonly int[] Fishes = new int[] { /* List of fish item IDs */ };
 
         /// <summary>
-        /// 任意金色小动物
+        /// Any tombstone
         /// </summary>
-        public static readonly int[] GoldCritters = new int[] { 2889, 2890, 2891, 4340, 2892, 4274, 2893, 4362, 2894, 4482, 3564, 4419, 2895 };
+        public static readonly int[] Tombstones = new int[] { /* List of tombstone item IDs */ };
 
         /// <summary>
-        /// 任意马掌气球
+        /// Any gold critter
         /// </summary>
-        public static readonly int[] HorseshoeBalloons = new int[] { 1250, 1251, 1252, 3250, 3251, 3252 };
-
+        public static readonly int[] GoldCritters = new int[] { /* List of gold critter item IDs */ };
 
         /// <summary>
-        /// 任意鹦鹉
+        /// Any horseshoe balloon
         /// </summary>
-        public static readonly int[] Parrots = new int[] { 5212, 5300, 5312, 5313 };
+        public static readonly int[] HorseshoeBalloons = new int[] { /* List of horseshoe balloon item IDs */ };
 
         /// <summary>
-        /// 任意宝匣
+        /// Any parrot
         /// </summary>
-        public static readonly int[] Crates = new int[] { 2334, 2335, 2336, 3203, 3204, 3205, 3206, 3207, 3208, 4405, 4407, 4877, 5002, 3979, 3980, 3981, 3982, 3983, 3984, 3985, 3986, 3987, 4406, 4408, 4878, 5003 };
+        public static readonly int[] Parrots = new int[] { /* List of parrot item IDs */ };
 
+        /// <summary>
+        /// Any crate
+        /// </summary>
+        public static readonly int[] Crates = new int[] { /* List of crate item IDs */ };
 
-        #region wiki 定义
+        #region Wiki Definitions
         // --------------------------------------------------------------------
-        // 参考：https://terraria.wiki.gg/wiki/Alternative_crafting_ingredients
+        // Reference: https://terraria.wiki.gg/wiki/Alternative_crafting_ingredients
         // --------------------------------------------------------------------
 
         /// <summary>
-        /// 任意木材
+        /// Any wood
         /// </summary>
-        public static readonly int[] Woods = new int[] { 9, 619, 620, 621, 911, 1729, 2504, 2503, 5215 };
+        public static readonly int[] Woods = new int[] { /* List of wood item IDs */ };
 
         /// <summary>
-        /// 任意火把
+        /// Any torch
         /// </summary>
-        public static readonly int[] Torches = new int[] { 8, 430, 432, 427, 429, 428, 1245, 431, 974, 3114, 3004, 2274, 433, 523, 1333, 3045, 4383, 4384, 4385, 4386, 4387, 4388, 5293 };
+        public static readonly int[] Torches = new int[] { /* List of torch item IDs */ };
 
         /// <summary>
-        /// 任意铁锭
+        /// Any iron bar
         /// </summary>
-        public static readonly int[] IronBars = new int[] { 22, 704 };
+        public static readonly int[] IronBars = new int[] { /* List of iron bar item IDs */ };
 
         /// <summary>
-        /// 任意沙块
+        /// Any sand block
         /// </summary>
-        public static readonly int[] Sands = new int[] { 169, 408, 1246, 370, 3272, 3338, 3274, 3275 };
+        public static readonly int[] Sands = new int[] { /* List of sand block item IDs */ };
 
         /// <summary>
-        /// 任意压力板
+        /// Any pressure plate
         /// </summary>
-        public static readonly int[] PressurePlates = new int[] { 852, 543, 542, 541, 1151, 529, 853, 4261 };
+        public static readonly int[] PressurePlates = new int[] { /* List of pressure plate item IDs */ };
 
         /// <summary>
-        /// 任意鸟
+        /// Any bird
         /// </summary>
-        public static readonly int[] Birds = new int[] { 2015, 2016, 2017 };
+        public static readonly int[] Birds = new int[] { /* List of bird item IDs */ };
 
         /// <summary>
-        /// 任意蝎子
+        /// Any scorpion
         /// </summary>
-        public static readonly int[] Scorpions = new int[] { 2157, 2156 };
+        public static readonly int[] Scorpions = new int[] { /* List of scorpion item IDs */ };
 
         /// <summary>
-        /// 任意松鼠
+        /// Any squirrel
         /// </summary>
-        public static readonly int[] Squirrels = new int[] { 2018, 3563 };
+        public static readonly int[] Squirrels = new int[] { /* List of squirrel item IDs */ };
 
         /// <summary>
-        /// 任意丛林虫子
+        /// Any jungle bug
         /// </summary>
-        public static readonly int[] JungleBugs = new int[] { 3194, 3192, 3193 };
+        public static readonly int[] JungleBugs = new int[] { /* List of jungle bug item IDs */ };
 
         /// <summary>
-        /// 任意鸭子
+        /// Any duck
         /// </summary>
-        public static readonly int[] Ducks = new int[] { 2123, 2122 };
+        public static readonly int[] Ducks = new int[] { /* List of duck item IDs */ };
 
         /// <summary>
-        /// 任意蝴蝶
+        /// Any butterfly
         /// </summary>
-        public static readonly int[] Butterflies = new int[] { 1998, 2001, 1994, 1995, 1996, 1999, 1997, 2000 };
+        public static readonly int[] Butterflies = new int[] { /* List of butterfly item IDs */ };
 
         /// <summary>
-        /// 任意萤火虫
+        /// Any firefly
         /// </summary>
-        public static readonly int[] Fireflies = new int[] { 1992, 2004 };
+        public static readonly int[] Fireflies = new int[] { /* List of firefly item IDs */ };
 
         /// <summary>
-        /// 任意蜗牛
+        /// Any snail
         /// </summary>
-        public static readonly int[] Snails = new int[] { 2006, 2007 };
+        public static readonly int[] Snails = new int[] { /* List of snail item IDs */ };
 
         /// <summary>
-        /// 任意乌龟
+        /// Any turtle
         /// </summary>
-        public static readonly int[] Turtles = new int[] { 2006, 2007 };
+        public static readonly int[] Turtles = new int[] { /* List of turtle item IDs */ };
 
         /// <summary>
-        /// 任意金刚鹦鹉
+        /// Any macaw
         /// </summary>
-        public static readonly int[] Macaws = new int[] { 5212, 5300 };
+        public static readonly int[] Macaws = new int[] { /* List of macaw item IDs */ };
 
         /// <summary>
-        /// 任意玄凤鹦鹉
+        /// Any cockatiel
         /// </summary>
-        public static readonly int[] Cockatiels = new int[] { 5312, 5313 };
+        public static readonly int[] Cockatiels = new int[] { /* List of cockatiel item IDs */ };
 
         /// <summary>
-        /// 任意蜻蜓
+        /// Any dragonfly
         /// </summary>
-        public static readonly int[] Dragonflies = new int[] { 4334, 4335, 4336, 4338, 4339, 4337 };
+        public static readonly int[] Dragonflies = new int[] { /* List of dragonfly item IDs */ };
 
         /// <summary>
-        /// 任意水果
+        /// Any fruit
         /// </summary>
-        public static readonly int[] Fruits = new int[] { 4009, 4282, 4283, 4284, 4285, 4286, 4287, 4288, 4289, 4290, 4291, 4292, 4293, 4294, 4295, 4296, 4297, 5277, 5278 };
+        public static readonly int[] Fruits = new int[] { /* List of fruit item IDs */ };
 
         /// <summary>
-        /// 任意气球
+        /// Any balloon
         /// </summary>
-        public static readonly int[] Balloons = new int[] { 3738, 3736, 3737 };
+        public static readonly int[] Balloons = new int[] { /* List of balloon item IDs */ };
 
         /// <summary>
-        /// 任意云朵气球
+        /// Any cloud balloon
         /// </summary>
-        public static readonly int[] CloudBalloons = new int[] { 399, 1250 };
+        public static readonly int[] CloudBalloons = new int[] { /* List of cloud balloon item IDs */ };
 
         /// <summary>
-        /// 任意暴雪气球
+        /// Any blizzard balloon
         /// </summary>
-        public static readonly int[] BlizzardBalloons = new int[] { 1163, 1251 };
+        public static readonly int[] BlizzardBalloons = new int[] { /* List of blizzard balloon item IDs */ };
 
         /// <summary>
-        /// 任意沙暴气球
+        /// Any sandstorm balloon
         /// </summary>
-        public static readonly int[] SandstormBalloons = new int[] { 983, 1252 };
+        public static readonly int[] SandstormBalloons = new int[] { /* List of sandstorm balloon item IDs */ };
         #endregion
 
         #endregion
 
-
-
         /// <summary>
-        /// id 和 名称 对照
+        /// ID and Name Mapping
         /// </summary>
         static readonly Dictionary<int, string> mapping = new()
         {
-            {QuestFish, "当天任务鱼"},
-            {AnyQuestFish, "任意任务鱼"},
-            {AnyFish, "任意一种鱼"},
-
-            {AnyWood, "任意木材"},
-            {AnyTorch, "任意火把"},
-            {AnyIronBar, "任意铁锭"},
-            {AnySand, "任意沙块"},
-            {AnyPressurePlate, "任意压力板"},
-            {AnyBird, "任意鸟"},
-            {AnyScorpion, "任意蝎子"},
-            {AnySquirrel, "任意松鼠"},
-            {AnyJungleBug, "任意丛林虫子"},
-            {AnyDuck, "任意鸭子"},
-            {AnyButterfly, "任意蝴蝶"},
-            {AnyFirefly, "任意萤火虫"},
-            {AnySnail, "任意蜗牛"},
-            {AnyTurtle, "任意乌龟"},
-            {AnyMacaw, "任意金刚鹦鹉"},
-            {AnyCockatiel, "任意玄凤鹦鹉"},
-            {AnyDragonfly, "任意蜻蜓"},
-            {AnyFruit, "任意水果"},
-            {AnyBalloon, "任意气球"},
-            {AnyCloudBalloon, "任意云朵气球"},
-            {AnyBlizzardBalloon, "任意暴雪气球"},
-            {AnySandstormBalloon, "任意沙暴气球"},
-            {AnyHorseshoeBalloon, "任意马掌气球"},
-            {AnyCrate, "任意宝匣"},
-            {AnyTombstone, "任意墓碑"},
-            {AnyGoldCritter, "任意金色小动物"},
-            {AnyParrot, "任意鹦鹉"},
+            {QuestFish, "Today's Quest Fish"},
+            {AnyQuestFish, "Any Quest Fish"},
+            {AnyFish, "Any Fish"},
+            {AnyWood, "Any Wood"},
+            {AnyTorch, "Any Torch"},
+            {AnyIronBar, "Any Iron Bar"},
+            {AnySand, "Any Sand Block"},
+            {AnyPressurePlate, "Any Pressure Plate"},
+            {AnyBird, "Any Bird"},
+            {AnyScorpion, "Any Scorpion"},
+            {AnySquirrel, "Any Squirrel"},
+            {AnyJungleBug, "Any Jungle Bug"},
+            {AnyDuck, "Any Duck"},
+            {AnyButterfly, "Any Butterfly"},
+            {AnyFirefly, "Any Firefly"},
+            {AnySnail, "Any Snail"},
+            {AnyTurtle, "Any Turtle"},
+            {AnyMacaw, "Any Macaw"},
+            {AnyCockatiel, "Any Cockatiel"},
+            {AnyDragonfly, "Any Dragonfly"},
+            {AnyFruit, "Any Fruit"},
+            {AnyBalloon, "Any Balloon"},
+            {AnyCloudBalloon, "Any Cloud Balloon"},
+            {AnyBlizzardBalloon, "Any Blizzard Balloon"},
+            {AnySandstormBalloon, "Any Sandstorm Balloon"},
+            {AnyHorseshoeBalloon, "Any Horseshoe Balloon"},
+            {AnyCrate, "Any Crate"},
+            {AnyTombstone, "Any Tombstone"},
+            {AnyGoldCritter, "Any Gold Critter"},
+            {AnyParrot, "Any Parrot"}
         };
 
         public static string GetNameByType(int type, int stack = 1)
@@ -253,17 +247,11 @@ namespace FishShop
             return "";
         }
 
-        /// <summary>
-        /// 任意物品对应的物品id，fish ask时会显示对应的物品图标
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
         static int GetIconID(int type)
         {
             return type switch
             {
                 QuestFish => 0,
-
                 AnyQuestFish => 2472,
                 AnyFish => 2290,
                 AnyWood => 9,
@@ -297,7 +285,6 @@ namespace FishShop
             };
         }
 
-
         public static int GetTypeByName(string name = "")
         {
             if (string.IsNullOrEmpty(name))
@@ -311,63 +298,74 @@ namespace FishShop
                 }
             }
 
-            // 其它可用的代名词
             return name switch
             {
-                "任务鱼" => AnyQuestFish,
-                "鱼" => AnyFish,
-                "宝匣" => AnyCrate,
-                "金色小动物" or "金动物" => AnyGoldCritter,
-                "任意龟" => AnyTurtle,
-                "任意蛆虫" => AnyJungleBug,
-                "任意小鸟" => AnyBird,
-                "任意沙尘暴气球" => AnySandstormBalloon,
-                "任意云气球" => AnyCloudBalloon,
+                "Quest Fish" => AnyQuestFish,
+                "Fish" => AnyFish,
+                "Wood" => AnyWood,
+                "Torch" => AnyTorch,
+                "Iron Bar" => AnyIronBar,
+                "Sand Block" => AnySand,
+                "Pressure Plate" => AnyPressurePlate,
+                "Bird" => AnyBird,
+                "Scorpion" => AnyScorpion,
+                "Squirrel" => AnySquirrel,
+                "Jungle Bug" => AnyJungleBug,
+                "Duck" => AnyDuck,
+                "Butterfly" => AnyButterfly,
+                "Firefly" => AnyFirefly,
+                "Snail" => AnySnail,
+                "Turtle" => AnyTurtle,
+                "Macaw" => AnyMacaw,
+                "Cockatiel" => AnyCockatiel,
+                "Dragonfly" => AnyDragonfly,
+                "Fruit" => AnyFruit,
+                "Balloon" => AnyBalloon,
+                "Cloud Balloon" => AnyCloudBalloon,
+                "Blizzard Balloon" => AnyBlizzardBalloon,
+                "Sandstorm Balloon" => AnySandstormBalloon,
+                "Horseshoe Balloon" => AnyHorseshoeBalloon,
+                "Crate" => AnyCrate,
+                "Tombstone" => AnyTombstone,
+                "Gold Critter" => AnyGoldCritter,
+                "Parrot" => AnyParrot,
                 _ => 0,
             };
         }
 
-
-        /// <summary>
-        /// 通过物品id 获得鱼店任意类物品id
-        /// </summary>
-        /// <param name="itemID"></param>
-        /// <returns> 交易物品ID </returns>
         public static int GetAnyType(int itemID)
         {
-            if (Main.anglerQuestItemNetIDs.Contains(itemID)) return AnyQuestFish; // 任意任务鱼
-            if (Fishes.Contains(itemID)) return AnyFish;  // 任意一种鱼
-            if (Woods.Contains(itemID)) return AnyWood; // 任意木材
-            if (Torches.Contains(itemID)) return AnyTorch; // 任意火把
-            if (IronBars.Contains(itemID)) return AnyIronBar;   // 任意铁锭
-            if (Sands.Contains(itemID)) return AnySand; // 任意沙块
-            if (PressurePlates.Contains(itemID)) return AnyPressurePlate;   // 任意压力板
-            if (Birds.Contains(itemID)) return AnyBird; // 任意鸟
-            if (Scorpions.Contains(itemID)) return AnyScorpion; // 任意蝎子
-            if (Squirrels.Contains(itemID)) return AnySquirrel; // 任意松鼠
-            if (JungleBugs.Contains(itemID)) return AnyJungleBug;   // 任意丛林虫子
-            if (Ducks.Contains(itemID)) return AnyDuck; // 任意鸭子
-            if (Butterflies.Contains(itemID)) return AnyButterfly; // 任意蝴蝶
-            if (Fireflies.Contains(itemID)) return AnyFirefly; // 任意萤火虫
-            if (Snails.Contains(itemID)) return AnySnail;   // 任意蜗牛
-            if (Turtles.Contains(itemID)) return AnyTurtle; // 任意乌龟
-            if (Macaws.Contains(itemID)) return AnyMacaw;   // 任意金刚鹦鹉
-            if (Cockatiels.Contains(itemID)) return AnyCockatiel;   // 任意玄凤鹦鹉
-            if (Dragonflies.Contains(itemID)) return AnyDragonfly;  // 任意蜻蜓
-            if (Fruits.Contains(itemID)) return AnyFruit;   // 任意水果
-            if (Balloons.Contains(itemID)) return AnyBalloon;   // 任意气球
-            if (CloudBalloons.Contains(itemID)) return AnyCloudBalloon; // 任意云朵气球
-            if (BlizzardBalloons.Contains(itemID)) return AnyBlizzardBalloon;   // 任意暴雪气球
-            if (SandstormBalloons.Contains(itemID)) return AnySandstormBalloon; // 任意沙暴气球
-            if (HorseshoeBalloons.Contains(itemID)) return AnyHorseshoeBalloon; // 任意马掌气球
-
-            if (Crates.Contains(itemID)) return AnyCrate;  // 任意宝匣
-            if (Tombstones.Contains(itemID)) return AnyTombstone;   //任意墓碑
-            if (GoldCritters.Contains(itemID)) return AnyGoldCritter;   //任意金色小动物
-            if (Parrots.Contains(itemID)) return AnyParrot; // 任意鹦鹉
+            if (Main.anglerQuestItemNetIDs.Contains(itemID)) return AnyQuestFish;
+            if (Fishes.Contains(itemID)) return AnyFish;
+            if (Woods.Contains(itemID)) return AnyWood;
+            if (Torches.Contains(itemID)) return AnyTorch;
+            if (IronBars.Contains(itemID)) return AnyIronBar;
+            if (Sands.Contains(itemID)) return AnySand;
+            if (PressurePlates.Contains(itemID)) return AnyPressurePlate;
+            if (Birds.Contains(itemID)) return AnyBird;
+            if (Scorpions.Contains(itemID)) return AnyScorpion;
+            if (Squirrels.Contains(itemID)) return AnySquirrel;
+            if (JungleBugs.Contains(itemID)) return AnyJungleBug;
+            if (Ducks.Contains(itemID)) return AnyDuck;
+            if (Butterflies.Contains(itemID)) return AnyButterfly;
+            if (Fireflies.Contains(itemID)) return AnyFirefly;
+            if (Snails.Contains(itemID)) return AnySnail;
+            if (Turtles.Contains(itemID)) return AnyTurtle;
+            if (Macaws.Contains(itemID)) return AnyMacaw;
+            if (Cockatiels.Contains(itemID)) return AnyCockatiel;
+            if (Dragonflies.Contains(itemID)) return AnyDragonfly;
+            if (Fruits.Contains(itemID)) return AnyFruit;
+            if (Balloons.Contains(itemID)) return AnyBalloon;
+            if (CloudBalloons.Contains(itemID)) return AnyCloudBalloon;
+            if (BlizzardBalloons.Contains(itemID)) return AnyBlizzardBalloon;
+            if (SandstormBalloons.Contains(itemID)) return AnySandstormBalloon;
+            if (HorseshoeBalloons.Contains(itemID)) return AnyHorseshoeBalloon;
+            if (Crates.Contains(itemID)) return AnyCrate;
+            if (Tombstones.Contains(itemID)) return AnyTombstone;
+            if (GoldCritters.Contains(itemID)) return AnyGoldCritter;
+            if (Parrots.Contains(itemID)) return AnyParrot;
 
             return 0;
         }
-
     }
 }
