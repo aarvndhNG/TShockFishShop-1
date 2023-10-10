@@ -1,146 +1,142 @@
-﻿using FishShop.Record;
+using FishShop.Record;
 using FishShop.Shop;
 using System;
 using Terraria;
 using TShockAPI;
 
-namespace FishShop;
-
-public partial class Plugin
+namespace FishShop
 {
-    // 购买
-    static void BuyGoods(CommandArgs args)
+    public partial class Plugin
     {
-        if (!args.Player.RealPlayer)
+        // Purchase
+        static void BuyGoods(CommandArgs args)
         {
-            args.Player.SendErrorMessage("此指令需要在游戏内执行！");
-            return;
-        }
-
-        // 商店是否解锁
-        if (!ShopIsReady(args.Player))
-        {
-            return;
-        }
-
-        TSPlayer op = args.Player;
-        if (args.Parameters.Count < 2)
-        {
-            op.SendErrorMessage("需输入 物品名 / 商品编号，例如: /fish buy 1，/fish buy 生命水晶");
-            return;
-        }
-
-
-        // 找到对应商品
-        if (int.TryParse(args.Parameters[1], out int goodsSerial))
-        {
-            // 编号有效性
-            int count = _config.shop.Count;
-            if (goodsSerial <= 0 || goodsSerial > count)
+            if (!args.Player.RealPlayer)
             {
-                op.SendErrorMessage($"最大编号为: {count}，请输入 /fish list 查看货架");
+                args.Player.SendErrorMessage("This command needs to be executed in-game!");
                 return;
             }
-        }
-        else
-        {
-            // 通过名字 匹配编号
-            int goodsID = IDSet.GetIDByName(args.Parameters[1]);
-            if (goodsID != 0)
+
+            // Check if the shop is ready
+            if (!ShopIsReady(args.Player))
             {
-                for (int i = 0; i < _config.shop.Count; i++)
+                return;
+            }
+
+            TSPlayer op = args.Player;
+            if (args.Parameters.Count < 2)
+            {
+                op.SendErrorMessage("You need to input the item name or item number, for example: /fish buy 1 or /fish buy Life Crystal");
+                return;
+            }
+
+            // Find the corresponding item
+            if (int.TryParse(args.Parameters[1], out int goodsSerial))
+            {
+                // Validity check for the item number
+                int count = _config.shop.Count;
+                if (goodsSerial <= 0 || goodsSerial > count)
                 {
-                    if (_config.shop[i].id == goodsID)
+                    op.SendErrorMessage($"The maximum number is: {count}, please use /fish list to view the shelf.");
+                    return;
+                }
+            }
+            else
+            {
+                // Match by name and get the item's ID
+                int goodsID = IDSet.GetIDByName(args.Parameters[1]);
+                if (goodsID != 0)
+                {
+                    for (int i = 0; i < _config.shop.Count; i++)
                     {
-                        goodsSerial = i + 1;
-                        break;
+                        if (_config.shop[i].id == goodsID)
+                        {
+                            goodsSerial = i + 1;
+                            break;
+                        }
+                    }
+                }
+
+                if (goodsSerial == 0)
+                {
+                    op.SendErrorMessage($"No item with the name {args.Parameters[1]} found.");
+                    return;
+                }
+            }
+            ShopItemData shopItemData = _config.shop[goodsSerial - 1];
+
+            // Purchase quantity / extra parameter
+            int amount = 1;
+            string extra = "";
+            if (args.Parameters.Count > 2)
+            {
+                int.TryParse(args.Parameters[2], out amount);
+                extra = args.Parameters[2];
+            }
+            if (amount < 1)
+            {
+                amount = 1;
+            }
+            // For items that can be purchased only one at a time
+            amount = Math.Min(amount, shopItemData.BuyMax());
+            if (amount < 1) amount = 1;
+
+            // Create shop item (some logic processing)
+            ShopItem shopItem = ShopItemCreate.Create(shopItemData);
+            shopItem.op = args.Player;
+            shopItem.amount = amount;
+            shopItem.extra = extra;
+
+            // Check if the purchase is valid
+            string result = shopItem.CanBuy();
+            if (result != "")
+            {
+                op.SendInfoMessage(result);
+                return;
+            }
+
+            // Check item stacking limit [to be optimized]
+            if (shopItemData.id > 0)
+            {
+                Item itemNet = new Item();
+                itemNet.SetDefaults(shopItemData.id);
+                if (shopItemData.stack * amount > itemNet.maxStack)
+                {
+                    float num = itemNet.maxStack / shopItemData.stack;
+                    amount = (int)Math.Floor(num);
+                    if (amount == 0)
+                    {
+                        op.SendErrorMessage($"[Fish Shop] This item has incorrect stack quantity configuration, name={shopItemData.name}, id={shopItemData.id}, stack={shopItemData.stack}");
+                        return;
                     }
                 }
             }
 
-            if (goodsSerial == 0)
+            // Inquiry
+            string msg = shopItem.CheckCost();
+            if (msg == "")
             {
-                op.SendErrorMessage($"没有名为 {args.Parameters[1]} 的 物品");
-                return;
-            }
-        }
-        ShopItemData shopItemData = _config.shop[goodsSerial - 1];
+                // Deduct money
+                shopItem.DeductCost(out int costMoney, out int costFish);
 
-        // 购买数量/额外参数
-        int amount = 1;
-        string extra = "";
-        if (args.Parameters.Count > 2)
-        {
-            int.TryParse(args.Parameters[2], out amount);
-            extra = args.Parameters[2];
-        }
-        if (amount < 1)
-        {
-            amount = 1;
-        }
-        // 单次至多买一件的物品
-        amount = Math.Min(amount, shopItemData.BuyMax());
-        if (amount < 1) amount = 1;
+                // Provide goods/services
+                shopItem.ProvideGoods();
 
-
-        // 创建商店物品（一些逻辑处理）
-        ShopItem shopItem = ShopItemCreate.Create(shopItemData);
-        shopItem.op = args.Player;
-        shopItem.amount = amount;
-        shopItem.extra = extra;
-
-        // 检查购买
-        string result = shopItem.CanBuy();
-        if (result != "")
-        {
-            op.SendInfoMessage(result);
-            return;
-        }
-
-        // 检查物品堆叠上线[待优化]
-        if (shopItemData.id > 0)
-        {
-            Item itemNet = new();
-            itemNet.SetDefaults(shopItemData.id);
-            if (shopItemData.stack * amount > itemNet.maxStack)
-            {
-                float num = itemNet.maxStack / shopItemData.stack;
-                amount = (int)Math.Floor(num);
-                if (amount == 0)
+                string s = "";
+                if (InventoryHelper.IsBuilder(op))
                 {
-                    op.SendErrorMessage($"[鱼店]此商品的堆叠数量配置错误,name={shopItemData.name},id={shopItemData.id},stack={shopItemData.stack}");
-                    return;
+                    s = $"(You are a builder, enjoying a 10% discount, only paying {utils.GetMoneyDesc(costMoney)})";
                 }
+
+                msg = $"You bought {amount} {shopItemData.GetItemDesc()} | Cost: {shopItemData.GetCostDesc(amount)}{s} | Balance: {InventoryHelper.GetCoinsCountDesc(op)}";
+                op.SendSuccessMessage(msg);
+                utils.Log($"{op.Name} bought {shopItemData.GetItemDesc()}");
+                Records.Record(op, shopItemData, amount, costMoney, costFish);
             }
-        }
-
-
-        // 询价
-        string msg = shopItem.CheckCost();
-        if (msg=="")
-        {
-            // 扣钱
-            shopItem.DeductCost(out int costMoney, out int costFish);
-
-            // 提供商品/服务
-            shopItem.ProvideGoods();
-
-            string s = "";
-            if (InventoryHelper.IsBuilder(op))
+            else
             {
-                s = $"（你是建筑师，享1折优惠，钱币只收 {utils.GetMoneyDesc(costMoney)}）";
+                op.SendInfoMessage($"Purchase failed because: {msg}, please use /fish ask {goodsSerial} to check the purchase conditions.");
             }
-
-            msg = $"你购买了 {amount}件 {shopItemData.GetItemDesc()} | 花费: {shopItemData.GetCostDesc(amount)}{s} | 余额: {InventoryHelper.GetCoinsCountDesc(op)}";
-            op.SendSuccessMessage(msg);
-            utils.Log($"{op.Name} 买了 {shopItemData.GetItemDesc()}");
-            Records.Record(op, shopItemData, amount, costMoney, costFish);
         }
-        else
-        {
-            op.SendInfoMessage($"没买成功，因为: {msg}，请输入 /fish ask {goodsSerial} 查询购买条件");
-        }
-
     }
-
 }
