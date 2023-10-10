@@ -256,7 +256,7 @@ public class ShopItemData
                     case "copper coin": case "copper": id = 71; break;
                     case "silver coin": case "silver": id = 72; break;
                     case "gold coin": case "gold": id = 73; break;
-                    case "platinum coin": case "platinum": case "platinum": id = 74; break;
+                    case "platinum coin": case "platinum": id = 74; break;
                 }
             }
             switch (data.id)
