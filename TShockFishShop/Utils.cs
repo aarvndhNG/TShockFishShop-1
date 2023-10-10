@@ -10,7 +10,7 @@ using TShockAPI;
 
 namespace FishShop
 {
-    public class utils
+    public class Utils
     {
         public static List<string> MoonPhases = new() { "Full Moon", "Waning Gibbous", "Last Quarter", "Waning Crescent", "New Moon", "Waxing Crescent", "First Quarter", "Waxing Gibbous" };
 
