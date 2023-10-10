@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Terraria;
 using TShockAPI;
-
 
 namespace FishShop
 {
     /// <summary>
-    /// 许愿池
+    /// Wishing Well
     /// </summary>
     public class WishHelper
     {
@@ -16,37 +15,35 @@ namespace FishShop
             TSPlayer op = args.Player;
             void ShowHelpText()
             {
-                op.SendInfoMessage("/wish list，查看货架");
+                op.SendInfoMessage("/wish list, view the shelves");
             }
 
             if (TShock.ServerSideCharacterConfig.Settings.Enabled && op.Group.Name == TShock.Config.Settings.DefaultGuestGroupName)
             {
-                op.SendErrorMessage("游客无法使用许愿池");
+                op.SendErrorMessage("Guests cannot use the Wishing Well");
                 return;
             }
 
-
             if (args.Parameters.Count == 0)
             {
-                op.SendErrorMessage("语法错误，输入 /wish help 查询用法");
+                op.SendErrorMessage("Syntax error, type /wish help to see usage");
                 return;
             }
 
             string kw = args.Parameters[0].ToLowerInvariant();
             switch (kw)
             {
-                // 帮助
+                // Help
                 case "h":
                 case "help":
                     ShowHelpText();
                     return;
             }
 
-
             List<Item> items = TShock.Utils.GetItemByIdOrName(args.Parameters[0]);
             if (items.Count > 1)
             {
-                args.Player.SendInfoMessage("匹配到多个物品");
+                args.Player.SendInfoMessage("Multiple items matched");
                 string text = "";
                 for (int i = 0; i < items.Count; i++)
                 {
@@ -62,11 +59,10 @@ namespace FishShop
             }
             if (items.Count < 1)
             {
-                args.Player.SendErrorMessage("此物品不存在");
+                args.Player.SendErrorMessage("This item does not exist");
                 return;
             }
-            utils.Log($"{items[0].Name} prefix:{items[0].prefix}  stack:{items[0].stack}");
+            utils.Log($"{items[0].Name} prefix:{items[0].prefix} stack:{items[0].stack}");
         }
     }
-
 }
