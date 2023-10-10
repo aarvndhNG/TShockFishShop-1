@@ -42,7 +42,7 @@ namespace FishShop
             Settings.Load(settingsFile);
             Config.GenConfig(configFile);
             Records.RecodFile = recordFile;
-            Utils.Init();
+            utils.init();
         }
 
         private void Manage(CommandArgs args)
