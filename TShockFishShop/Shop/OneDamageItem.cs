@@ -19,7 +19,7 @@ public class OneDamageItem : ShopItem
 
         if (!NPCHelper.AnyBoss())
         {
-            return "当前无任何boss存在！";
+            return "There is currently no boss!";
         }
 
         return "";
