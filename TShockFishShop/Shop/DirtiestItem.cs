@@ -1,160 +1,139 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using TShockAPI;
 
-namespace FishShop.Shop;
-
-public class DirtiestItem : ShopItem
+namespace FishShop.Shop
 {
-    public Point posDirt = new();
-    public Point posPoop = new();
-
-    public DirtiestItem(ShopItemData si) : base(si)
+    public class DirtiestItem : ShopItem
     {
-    }
+        public Point posDirt = new Point();
+        public Point posPoop = new Point();
 
-    public override string CanBuy()
-    {
-        var msg = base.CanBuy();
-        if (msg != "") return msg;
-
-        if (!CheckDirtiestMatrix(op)) return "在你的周围未能找到臭臭矩阵！(7x7中空)";
-        return "";
-    }
-
-    public override void ProvideGoods()
-    {
-        bool flag = FindDirtest();
-        MoveDirtest(flag);
-        TSPlayer.All.SendInfoMessage($"{op.Name} 正在举行 [i:5395]臭臭仪式[i:5395]");
-        if (flag)
-            op.SendSuccessMessage("臭臭仪式完成，[i:5400]最脏的块 已生成(σﾟ∀ﾟ)σ");
-        else
-            op.SendErrorMessage("糟糕，找遍整个世界都没有发现 [i:5400]最脏的块 o(´^｀)o");
-    }
-
-
-    /// <summary>
-    /// 玩家附近是否有 臭臭矩阵
-    /// </summary>
-    /// <param name="op"></param>
-    /// <returns></returns>
-    bool CheckDirtiestMatrix(TSPlayer op)
-    {
-        Rectangle rect = utils.GetScreen(op);
-        for (int x = rect.X; x < rect.Right; x++)
+        public DirtiestItem(ShopItemData si) : base(si)
         {
-            for (int y = rect.Y; y < rect.Bottom; y++)
+        }
+
+        public override string CanBuy()
+        {
+            var msg = base.CanBuy();
+            if (msg != "") return msg;
+
+            if (!CheckDirtiestMatrix(op)) return "Couldn't find a stink matrix nearby you! (7x7 empty)";
+            return "";
+        }
+
+        public override void ProvideGoods()
+        {
+            bool flag = FindDirtiest();
+            MoveDirtiest(flag);
+            TSPlayer.All.SendInfoMessage($"{op.Name} is performing a [i:5395]stinky ritual[i:5395]");
+            if (flag)
+                op.SendSuccessMessage("Stinky ritual completed, [i:5400]Dirtiest Block has been generated (σﾟ∀ﾟ)σ");
+            else
+                op.SendErrorMessage("Oops, couldn't find the [i:5400]Dirtiest Block anywhere in the world o(´^｀)o");
+        }
+
+        bool CheckDirtiestMatrix(TSPlayer op)
+        {
+            Rectangle rect = utils.GetScreen(op);
+            for (int x = rect.X; x < rect.Right; x++)
             {
-                ITile tile = Main.tile[x, y];
-                if (!tile.active()) continue;
-                if (tile.type == TileID.PoopBlock)
+                for (int y = rect.Y; y < rect.Bottom; y++)
                 {
-                    if (FindDirtestMatrix(x, y))
+                    ITile tile = Main.tile[x, y];
+                    if (!tile.active()) continue;
+                    if (tile.type == TileID.PoopBlock)
                     {
-                        posPoop = new Point(x, y);
+                        if (FindDirtiestMatrix(x, y))
+                        {
+                            posPoop = new Point(x, y);
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        bool FindDirtiestMatrix(int tileX, int tileY)
+        {
+            int x;
+            int y;
+            for (int i = 0; i < 49; i++)
+            {
+                x = tileX + i % 7;
+                y = tileY + i / 7;
+
+                ITile tile = Main.tile[x, y];
+                if (i == 24)
+                {
+                    if (tile.active()) return false;
+                }
+                else
+                {
+                    if (!tile.active()) return false;
+                    if (tile.type != TileID.PoopBlock) return false;
+                }
+            }
+            return true;
+        }
+
+        bool FindDirtiest()
+        {
+            for (int x = 0; x < Main.maxTilesX; x++)
+            {
+                for (int y = 0; y < Main.maxTilesY; y++)
+                {
+                    ITile tile = Main.tile[x, y];
+                    if (!tile.active()) continue;
+                    if (tile.type == TileID.DirtiestBlock)
+                    {
+                        posDirt = new Point(x, y);
                         return true;
                     }
                 }
             }
+            return false;
         }
-        return false;
-    }
 
-
-    /// <summary>
-    /// 查找 臭臭矩阵
-    /// </summary>
-    bool FindDirtestMatrix(int tileX, int tileY)
-    {
-        int x;
-        int y;
-        for (int i = 0; i < 49; i++)
+        void MoveDirtiest(bool needSuccess)
         {
-            x = tileX + i % 7;
-            y = tileY + i / 7;
+            int x;
+            int y;
+            for (int i = 0; i < 49; i++)
+            {
+                x = posPoop.X + i % 7;
+                y = posPoop.Y + i / 7;
 
-            ITile tile = Main.tile[x, y];
-            if (i == 24)
-            {
-                if (tile.active()) return false;
-            }
-            else
-            {
-                if (!tile.active()) return false;
-                if (tile.type != TileID.PoopBlock) return false;
-            }
-        }
-        return true;
-    }
-
-    /// <summary>
-    /// 查找 是否有 最脏的块
-    /// </summary>
-    bool FindDirtest()
-    {
-        for (int x = 0; x < Main.maxTilesX; x++)
-        {
-            for (int y = 0; y < Main.maxTilesY; y++)
-            {
-                ITile tile = Main.tile[x, y];
-                if (!tile.active()) continue;
-                if (tile.type == TileID.DirtiestBlock)
+                if (i == 24)
                 {
-                    posDirt = new Point(x, y);
-                    return true;
+                    ITile tile = Main.tile[x, y];
+                    tile.type = needSuccess ? TileID.DirtiestBlock : TileID.Dirt;
+                    tile.active(true);
+                    tile.slope(0);
+                    tile.halfBrick(false);
+                    NetMessage.SendTileSquare(-1, x, y);
+                }
+                else
+                {
+                    ClearTile(x, y);
                 }
             }
-        }
-        return false;
-    }
 
-
-    /// <summary>
-    /// 转移 最脏的块 到臭臭矩阵中心
-    /// </summary>
-    void MoveDirtest(bool needSuccess)
-    {
-        int x;
-        int y;
-        // 清理图格
-        for (int i = 0; i < 49; i++)
-        {
-            x = posPoop.X + i % 7;
-            y = posPoop.Y + i / 7;
-
-
-            if (i == 24)
+            utils.Log($"true: {posDirt.X} {posDirt.Y}");
+            if (needSuccess)
             {
-                ITile tile = Main.tile[x, y];
-                tile.type = needSuccess ? TileID.DirtiestBlock : TileID.Dirt;
-                tile.active(true);
-                tile.slope(0);
-                tile.halfBrick(false);
-                NetMessage.SendTileSquare(-1, x, y);
-            }
-            else
-            {
-                ClearTile(x, y);
+                ClearTile(posDirt.X, posDirt.Y);
+                utils.Log($"{posDirt.X} {posDirt.Y}");
             }
         }
 
-        utils.Log($"true: {posDirt.X} {posDirt.Y}");
-        // 清除最脏块
-        if (needSuccess)
+        static void ClearTile(int x, int y)
         {
-            ClearTile(posDirt.X, posDirt.Y);
-            utils.Log($"{posDirt.X} {posDirt.Y}");
+            Main.tile[x, y].ClearTile();
+            NetMessage.SendTileSquare(-1, x, y);
         }
     }
-
-    static void ClearTile(int x, int y)
-    {
-        Main.tile[x, y].ClearTile();
-        NetMessage.SendTileSquare(-1, x, y);
-    }
-
-
 }
