@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -7,22 +7,19 @@ using Terraria.ID;
 using TShockAPI;
 using TShockAPI.Localization;
 
-
 namespace FishShop
 {
     public class NPCHelper
     {
-
         public static string GetNameByID(int id)
         {
-            // 城镇NPC 和 boss
+            // Town NPCs and bosses
             string s = Settings.GetNPCNameByID(id);
             if (!string.IsNullOrEmpty(s)) return s;
 
-            // 其它NPC
+            // Other NPCs
             s = GetNPCNameValue(id);
             if (!string.IsNullOrEmpty(s)) return s;
-
 
             return "";
         }
@@ -32,15 +29,13 @@ namespace FishShop
             int id = Settings.GetNPCIDByName(name);
             if (id != 0) return id;
 
-
             id = GetNPCIDByName(name);
             if (id != 0) return id;
 
             return 0;
         }
 
-
-        // 检查NPC是否在场（活着）
+        // Check if NPC is active (alive)
         public static bool CheckNPCActive(string npcNameOrId)
         {
             int id = 0;
@@ -55,14 +50,12 @@ namespace FishShop
             return false;
         }
 
-
         private static string GetNPCNameValue(int id)
         {
             if (id < NPCID.Count && id != 0)
                 return Lang.GetNPCNameValue(id);
             return "";
         }
-
 
         private static int GetNPCIDByName(string name)
         {
@@ -100,86 +93,80 @@ namespace FishShop
             return 0;
         }
 
-
-
-        // NPC重生
+        // NPC respawn
         public static void ReliveNPC(TSPlayer op)
         {
             List<int> found = new();
 
-            // 向导
+            // Guide
             found.Add(22);
 
-            // 解救状态
-            // 渔夫
+            // Rescue states
+            // Angler
             if (NPC.savedAngler)
                 found.Add(369);
 
-            // 哥布林
+            // Goblin Tinkerer
             if (NPC.savedGoblin)
                 found.Add(107);
 
-            // 机械师
+            // Mechanic
             if (NPC.savedMech)
                 found.Add(124);
 
-            // 发型师
+            // Stylist
             if (NPC.savedStylist)
                 found.Add(353);
 
-            // 酒馆老板
+            // Tavernkeep
             if (NPC.savedBartender)
                 found.Add(550);
 
-            // 高尔夫球手
+            // Golfer
             if (NPC.savedGolfer)
                 found.Add(588);
 
-            // 巫师
+            // Wizard
             if (NPC.savedWizard)
                 found.Add(108);
 
-            // 税收管
+            // Tax Collector
             if (NPC.savedTaxCollector)
                 found.Add(441);
 
-            // 猫
+            // Cat
             if (NPC.boughtCat)
                 found.Add(637);
 
-            // 狗
+            // Dog
             if (NPC.boughtDog)
                 found.Add(638);
 
-            // 兔
+            // Bunny
             if (NPC.boughtBunny)
                 found.Add(656);
 
-            // 怪物图鉴解锁情况
+            // Bestiary unlocks
             List<int> remains = new() {
-                // 22, //向导
-                19, //军火商
-                54, //服装商
-                38, //爆破专家
-                20, //树妖
-                207, //染料商
-                17, //商人
-                18, //护士
-                227, //油漆工
-                208, //派对女孩
-                228, //巫医
-                633, //动物学家
-                209, //机器侠
-                229, //海盗
-                178, //蒸汽朋克人
-                160, //松露人
-                663 //公主
-
-                // 453, //骷髅商人
-                // 368, //旅商
-                // 37, // 老人
+                19, // Arms Dealer
+                54, // Clothier
+                38, // Demolitionist
+                20, // Dryad
+                207, // Dye Trader
+                17, // Merchant
+                18, // Nurse
+                227, // Painter
+                208, // Party Girl
+                228, // Witch Doctor
+                633, // Zoologist
+                209, // Mechanic
+                229, // Pirate
+                178, // Steampunker
+                160, // Truffle
+                663 // Princess
             };
-            // 142, //圣诞老人
+
+            // Santa Claus
             if (Main.xMas)
                 remains.Add(142);
 
@@ -197,7 +184,7 @@ namespace FishShop
                 found.Remove(Main.npc[i].type);
             }
 
-            // 生成npc
+            // Generate NPCs
             List<string> names = new();
             foreach (int npcID in found)
             {
@@ -215,105 +202,90 @@ namespace FishShop
                 }
             }
 
-            // 找家
-            // for (int i = 0; i < Main.maxNPCs; i++)
-            // {
-            //     if( !Main.npc[i].active || !Main.npc[i].townNPC )
-            //         continue;
-
-            //     if( found.Contains(Main.npc[i].type) )
-            //         WorldGen.QuickFindHome(i);
-            // }
-
             if (found.Count > 0)
             {
-                TSPlayer.All.SendInfoMessage($"{op.Name} 复活了 {found.Count}个 NPC:");
+                TSPlayer.All.SendInfoMessage($"{op.Name} revived {found.Count} NPCs:");
                 TSPlayer.All.SendInfoMessage($"{string.Join("、", names)}");
             }
             else
             {
-                op.SendInfoMessage("入住过的NPC都活着");
+                op.SendInfoMessage("All previously housed NPCs are alive.");
             }
         }
 
         public static bool NeedBuyReliveNPC(TSPlayer op)
         {
-
             List<int> found = new();
 
-            // 向导
+            // Guide
             found.Add(22);
 
-            // 解救状态
-            // 渔夫
+            // Rescue states
+            // Angler
             if (NPC.savedAngler)
                 found.Add(369);
 
-            // 哥布林
+            // Goblin Tinkerer
             if (NPC.savedGoblin)
                 found.Add(107);
 
-            // 机械师
+            // Mechanic
             if (NPC.savedMech)
                 found.Add(124);
 
-            // 发型师
+            // Stylist
             if (NPC.savedStylist)
                 found.Add(353);
 
-            // 酒馆老板
+            // Tavernkeep
             if (NPC.savedBartender)
                 found.Add(550);
 
-            // 高尔夫球手
+            // Golfer
             if (NPC.savedGolfer)
                 found.Add(588);
 
-            // 巫师
+            // Wizard
             if (NPC.savedWizard)
                 found.Add(108);
 
-            // 税收管
+            // Tax Collector
             if (NPC.savedTaxCollector)
                 found.Add(441);
 
-            // 猫
+            // Cat
             if (NPC.boughtCat)
                 found.Add(637);
 
-            // 狗
+            // Dog
             if (NPC.boughtDog)
                 found.Add(638);
 
-            // 兔
+            // Bunny
             if (NPC.boughtBunny)
                 found.Add(656);
 
-            // 怪物图鉴解锁情况
+            // Bestiary unlocks
             List<int> remains = new() {
-                // 22, //向导
-                19, //军火商
-                54, //服装商
-                38, //爆破专家
-                20, //树妖
-                207, //染料商
-                17, //商人
-                18, //护士
-                227, //油漆工
-                208, //派对女孩
-                228, //巫医
-                633, //动物学家
-                209, //机器侠
-                229, //海盗
-                178, //蒸汽朋克人
-                160, //松露人
-                663 //公主
-
-                // 453, //骷髅商人
-                // 368, //旅商
-                // 37, // 老人
+                19, // Arms Dealer
+                54, // Clothier
+                38, // Demolitionist
+                20, // Dryad
+                207, // Dye Trader
+                17, // Merchant
+                18, // Nurse
+                227, // Painter
+                208, // Party Girl
+                228, // Witch Doctor
+                633, // Zoologist
+                209, // Mechanic
+                229, // Pirate
+                178, // Steampunker
+                160, // Truffle
+                663 // Princess
             };
-            // 142, //圣诞老人
+
+            // Santa Claus
             if (Main.xMas)
                 remains.Add(142);
 
@@ -331,10 +303,9 @@ namespace FishShop
                 found.Remove(Main.npc[i].type);
             }
 
-
             if (found.Count == 0)
             {
-                op.SendInfoMessage("入住过的NPC都活着，无需购买");
+                op.SendInfoMessage("All previously housed NPCs are alive, no need to buy them.");
                 return false;
             }
             return true;
@@ -345,12 +316,7 @@ namespace FishShop
             return Main.BestiaryDB.FindEntryByNPCID(npcId).UIInfoProvider.GetEntryUICollectionInfo().UnlockState > BestiaryEntryUnlockState.NotKnownAtAll_0;
         }
 
-
-
-        /// <summary>
-        /// 找出附近的指定NPC
-        /// </summary>
-        /// <returns>未找到返回null</returns>
+        // Find nearby specified NPC
         public static NPC FindNearNPC(TSPlayer op, int npcID)
         {
             Rectangle rect = new(op.TileX - 59, op.TileY - 35 + 3, 120, 68);
@@ -365,11 +331,7 @@ namespace FishShop
             return null;
         }
 
-
-
-        /// <summary>
-        /// 生成NPC
-        /// </summary>
+        // Spawn NPC
         public static void SpawnNPC(TSPlayer op, int npcID, int times = 0)
         {
             string bossType = "";
@@ -386,10 +348,8 @@ namespace FishShop
                 case 127: bossType = "skeletron prime"; break;
                 case 222: bossType = "queen bee"; break;
                 case 35: bossType = "skeletron"; break;
-
                 case 125: bossType = "twins"; break;
                 case 126: bossType = "twins"; break;
-
                 case 113: bossType = "wall of flesh"; break;
                 case 396: bossType = "moon lord"; break;
                 case 636: bossType = "empress of light"; break;
@@ -402,12 +362,10 @@ namespace FishShop
                 case 344: bossType = "everscream"; break;
                 case 346: bossType = "santa-nk1"; break;
                 case 345: bossType = "ice queen"; break;
-
                 case 392: bossType = "martian saucer"; break;
                 case 393: bossType = "martian saucer"; break;
                 case 394: bossType = "martian saucer"; break;
                 case 395: bossType = "martian saucer"; break;
-
                 case 517: bossType = "solar pillar"; break;
                 case 507: bossType = "nebula pillar"; break;
                 case 422: bossType = "vortex pillar"; break;
@@ -417,7 +375,7 @@ namespace FishShop
 
             if (!string.IsNullOrEmpty(bossType))
             {
-                // 召唤boss
+                // Summon boss
                 List<string> args = new() { bossType };
                 if (times > 0)
                     args.Add(times.ToString());
@@ -425,7 +383,7 @@ namespace FishShop
             }
             else
             {
-                // 生成npc
+                // Spawn NPC
                 NPC npc = new();
                 npc.SetDefaults(npcID);
 
@@ -443,18 +401,13 @@ namespace FishShop
             }
         }
 
-        /// <summary>
-        /// 清除NPC
-        /// </summary>
-        /// <param name="op"></param>
-        /// <param name="npcID"></param>
-        /// <param name="times"></param>
+        // Clear NPC
         public static void ClearNPC(TSPlayer op, int npcID, int times = 0)
         {
             List<NPC> npcs = TShock.Utils.GetNPCByIdOrName(npcID.ToString());
             if (npcs.Count == 0)
             {
-                op.SendErrorMessage("找不到对应的 NPC");
+                op.SendErrorMessage("Could not find an NPC with the specified ID.");
             }
             else if (npcs.Count > 1)
             {
@@ -463,11 +416,11 @@ namespace FishShop
             else
             {
                 var npc = npcs[0];
-                TSPlayer.All.SendSuccessMessage("{0} 清理了 {1} 个 {2}", op.Name, ClearNPCByID(npc.netID), npc.FullName);
+                TSPlayer.All.SendSuccessMessage("{0} cleared {1} {2}(s)", op.Name, ClearNPCByID(npc.netID), npc.FullName);
             }
         }
 
-        // 通过npcid清理npc
+        // Clear NPC by ID
         private static int ClearNPCByID(int npcID)
         {
             int cleared = 0;
@@ -484,10 +437,7 @@ namespace FishShop
             return cleared;
         }
 
-        /// <summary>
-        /// SpawnBoss
-        /// </summary>
-        /// <param name="args"></param>
+        // SpawnBossRaw method
         private static void SpawnBossRaw(CommandArgs args)
         {
             if (args.Parameters.Count < 1 || args.Parameters.Count > 2)
@@ -499,11 +449,11 @@ namespace FishShop
             int amount = 1;
             if (args.Parameters.Count == 2 && (!int.TryParse(args.Parameters[1], out amount) || amount <= 0))
             {
-                args.Player.SendErrorMessage("无效的boss名!");
+                args.Player.SendErrorMessage("Invalid boss name!");
                 return;
             }
 
-            string message = "{0} 召唤了 {1} {2} 次";
+            string message = "{0} spawned {1} {2}(s)";
             string spawnName = "";
             int npcID = 0;
             NPC npc = new();
@@ -518,7 +468,7 @@ namespace FishShop
                         npc.SetDefaults(i);
                         TSPlayer.Server.SpawnNPC(npc.type, npc.FullName, amount, args.Player.TileX, args.Player.TileY);
                     }
-                    spawnName = "Boss全明星";
+                    spawnName = "Boss All-Star";
                     return;
 
                 case "brain":
@@ -587,23 +537,23 @@ namespace FishShop
                     TSPlayer.Server.SpawnNPC(npc.type, npc.FullName, amount, args.Player.TileX, args.Player.TileY);
                     npc.SetDefaults(126);
                     TSPlayer.Server.SpawnNPC(npc.type, npc.FullName, amount, args.Player.TileX, args.Player.TileY);
-                    spawnName = "双子魔眼";
+                    spawnName = "The Twins";
                     break;
 
                 case "wof":
                 case "wall of flesh":
                     if (Main.wofNPCIndex != -1)
                     {
-                        args.Player.SendErrorMessage("血肉墙已存在!");
+                        args.Player.SendErrorMessage("The Wall of Flesh is already summoned!");
                         return;
                     }
                     if (args.Player.Y / 16f < Main.maxTilesY - 205)
                     {
-                        args.Player.SendErrorMessage("血肉墙只能在地狱进行召唤!");
+                        args.Player.SendErrorMessage("The Wall of Flesh can only be summoned in Hell!");
                         return;
                     }
                     NPC.SpawnWOF(new Vector2(args.Player.X, args.Player.Y));
-                    spawnName = "血肉墙";
+                    spawnName = "Wall of Flesh";
                     break;
 
                 case "moon":
@@ -657,94 +607,94 @@ namespace FishShop
                     break;
 
                 case "santa-nk1":
+                case "santa nk1":
                 case "santa":
+                case "nk1":
                     TSPlayer.Server.SetTime(false, 0.0);
                     npcID = 346;
                     break;
 
                 case "ice queen":
+                case "queen":
                     TSPlayer.Server.SetTime(false, 0.0);
                     npcID = 345;
                     break;
 
+                case "martian":
                 case "martian saucer":
+                case "saucer":
+                    TSPlayer.Server.SetTime(false, 0.0);
+                    npcID = 392;
+                    break;
+
+                case "martian drone":
+                case "martian boss":
+                case "drone":
+                    npcID = 393;
+                    break;
+
+                case "martian engineer":
+                case "engineer":
+                    npcID = 394;
+                    break;
+
+                case "martian officer":
+                case "officer":
                     npcID = 395;
                     break;
 
+                case "solar":
                 case "solar pillar":
                     npcID = 517;
                     break;
 
+                case "nebula":
                 case "nebula pillar":
                     npcID = 507;
                     break;
 
+                case "vortex":
                 case "vortex pillar":
                     npcID = 422;
                     break;
 
+                case "stardust":
                 case "stardust pillar":
                     npcID = 493;
                     break;
 
                 case "deerclops":
+                case "dc":
                     npcID = 668;
                     break;
 
                 default:
-                    args.Player.SendErrorMessage("无法识别此boss名!");
-                    return;
+                    TSPlayer.Server.SetTime(false, 0.0);
+                    npc = TShock.Utils.GetNPCByIdOrName(args.Parameters[0]);
+                    if (npc.Count == 0)
+                    {
+                        args.Player.SendErrorMessage("Invalid boss name!");
+                        return;
+                    }
+                    npcID = npc[0].netID;
+                    break;
             }
 
-            if (npcID != 0)
+            if (string.IsNullOrEmpty(spawnName))
             {
                 npc.SetDefaults(npcID);
                 TSPlayer.Server.SpawnNPC(npc.type, npc.FullName, amount, args.Player.TileX, args.Player.TileY);
-
-                // boss的名字
-                if (string.IsNullOrEmpty(spawnName))
-                    spawnName = GetNameByID(npcID);
+                spawnName = npc.FullName;
             }
 
-            //"<player> spawned <spawn name> <x> time(s)"
-            TSPlayer.All.SendSuccessMessage(message, args.Player.Name, spawnName, amount);
-        }
-
-        /// <summary>
-        /// 模拟玩家攻击boss
-        /// </summary>
-        /// <param name="op">玩家对象</param>
-        /// <param name="npc">boss的npc对象</param>
-        public static void AttackBoss(TSPlayer op, NPC npc)
-        {
-            // itemid projectileid
-            // 279 48
-            // 3197 520
-            Item item = new();
-            item.SetDefaults(3197);
-            Vector2 pos = new(npc.position.X + (float)(npc.width * 0.5), npc.position.Y + (float)(npc.height * 0.5));
-            Vector2 vel = new(20, 0);
-            int pIndex = Projectile.NewProjectile(op.TPlayer.GetProjectileSource_Item(item), pos, vel, 520, 1, 0f, op.Index);
-            Main.projectile[pIndex].ai[0] = 2f;
-            Main.projectile[pIndex].timeLeft = 10;
-            Main.projectile[pIndex].friendly = true;
-            //Main.projectile[pIndex].penetrate = 3;
-            //Main.projectile[pIndex].ranged = true;
-            //Main.projectile[pIndex].coldDamage = true;
-            NetMessage.SendData(27, -1, -1, null, pIndex);
-        }
-
-        /// <summary>
-        /// 是否有boss存在
-        /// </summary>
-        public static bool AnyBoss()
-        {
-            foreach (NPC npc in Main.npc)
+            if (amount == 1)
             {
-                if (npc != null && npc.active && npc.boss)
-                    return true;
+                TSPlayer.All.SendSuccessMessage(message, args.Player.Name, spawnName);
             }
-            return false;
+            else
+            {
+                TSPlayer.All.SendSuccessMessage(message, args.Player.Name, amount, spawnName);
+            }
         }
     }
 }
