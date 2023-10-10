@@ -78,7 +78,7 @@ namespace FishShop
             }
             else
             {
-                msg = $"[c/96FF0A:Welcome to &#8203;``oaicite:{"number":1,"invalid_reason":"Malformed citation 【{_config.name}】"}``&#8203; Shelf ({pageNum}/{totalPage}): ]\n" + msg;
+                msg = $"$"[c/96FF0A: Welcome to [{_config.name}], shelf ({pageNum}/{totalPage}): ]\n" + msg;
             }
 
             if (args.Player != null)
