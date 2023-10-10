@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Terraria;
 using Terraria.GameContent.Events;
 using Terraria.ID;
@@ -19,22 +19,22 @@ namespace FishShop
                     // 0.0 04:30
                     // 13500    08:15
                     TSPlayer.Server.SetTime(true, 13500.0);
-                    TSPlayer.All.SendInfoMessage("{0} 将时间调到 早上 （8:15）", player.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Set time to morning（8:15）", player.Name);
                     break;
 
                 case "noon":
                     TSPlayer.Server.SetTime(true, 27000.0);
-                    TSPlayer.All.SendInfoMessage("{0} 将时间调到 中午 （12:00）", player.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Set time to noon（12:00）", player.Name);
                     break;
 
                 case "night":
                     TSPlayer.Server.SetTime(false, 0.0);
-                    TSPlayer.All.SendInfoMessage("{0} 将时间调到 晚上（19:30）", player.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Set time to night（19:30）", player.Name);
                     break;
 
                 case "midnight":
                     TSPlayer.Server.SetTime(false, 16200.0);
-                    TSPlayer.All.SendInfoMessage("{0} 将时间调到 午夜（00:00）", player.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Set time to midnight（00:00）", player.Name);
                     break;
             }
         }
@@ -51,10 +51,10 @@ namespace FishShop
                 {
                     Main.StartRain();
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 让苍天下起了雨", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Let it rain", op.Name);
                 }
                 else
-                    op.SendInfoMessage("已经在下雨了~");
+                    op.SendInfoMessage("It's already raining~");
             }
             else
             {
@@ -62,10 +62,10 @@ namespace FishShop
                 {
                     Main.StopRain();
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 让雨停了下来", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Let the rain stop", op.Name);
                 }
                 else
-                    op.SendInfoMessage("没在下雨");
+                    op.SendInfoMessage("It's not raining");
             }
         }
 
@@ -78,20 +78,20 @@ namespace FishShop
                 if (!Main.bloodMoon)
                 {
                     TSPlayer.Server.SetBloodMoon(on);
-                    TSPlayer.All.SendInfoMessage("{0} 召唤了血月", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Summoned the Blood Moon", op.Name);
                 }
                 else
-                    op.SendInfoMessage("已经是血月期间了");
+                    op.SendInfoMessage("It’s already the blood moon period");
             }
             else
             {
                 if (Main.bloodMoon)
                 {
                     TSPlayer.Server.SetBloodMoon(on);
-                    TSPlayer.All.SendInfoMessage("{0} 跳过了血月", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Skip the blood moon", op.Name);
                 }
                 else
-                    op.SendInfoMessage("已经不是血月了");
+                    op.SendInfoMessage("It’s not a blood moon anymore");
             }
         }
 
@@ -104,20 +104,20 @@ namespace FishShop
                 if (!Main.eclipse)
                 {
                     TSPlayer.Server.SetEclipse(on);
-                    TSPlayer.All.SendInfoMessage("{0} 召唤了日食", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Summoned a solar eclipse", op.Name);
                 }
                 else
-                    op.SendInfoMessage("已经是日食期间了");
+                    op.SendInfoMessage("It’s already the solar eclipse period");
             }
             else
             {
                 if (Main.eclipse)
                 {
                     TSPlayer.Server.SetEclipse(on);
-                    TSPlayer.All.SendInfoMessage("{0} 跳过了日食", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Skip the eclipse", op.Name);
                 }
                 else
-                    op.SendInfoMessage("已经不是日食了");
+                    op.SendInfoMessage("It’s no longer a solar eclipse");
             }
         }
 
@@ -131,10 +131,10 @@ namespace FishShop
                 {
                     Sandstorm.StartSandstorm();
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 召唤了沙尘暴", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Summoned a sandstorm", op.Name);
                 }
                 else
-                    op.SendInfoMessage("已经在刮沙尘暴了~");
+                    op.SendInfoMessage("There's already a sandstorm blowing~");
             }
             else
             {
@@ -142,10 +142,10 @@ namespace FishShop
                 {
                     Sandstorm.StopSandstorm();
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 停止了沙尘暴", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Stopped the sandstorm", op.Name);
                 }
                 else
-                    op.SendInfoMessage("没在刮沙尘暴");
+                    op.SendInfoMessage("No sandstorm blowing");
             }
         }
         // 雷雨
@@ -163,10 +163,10 @@ namespace FishShop
                     Main.windSpeedCurrent = Main._maxWind;
                     Main.windSpeedTarget = Main._maxWind;
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 召唤了雷雨", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} summoned a thunderstorm", op.Name);
                 }
                 else
-                    op.SendInfoMessage("已经是雷雨天了~");
+                    op.SendInfoMessage("It's already a thunderstorm~");
             }
             else
             {
@@ -176,10 +176,10 @@ namespace FishShop
                     Main.windSpeedCurrent = 0;
                     Main.windSpeedTarget = 0;
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 停止了雷雨天", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} The thunderstorm stopped", op.Name);
                 }
                 else
-                    op.SendInfoMessage("现在不是雷雨天");
+                    op.SendInfoMessage("It's not a thunderstorm day now");
             }
         }
 
@@ -194,10 +194,10 @@ namespace FishShop
                     Main.windSpeedCurrent = Main._maxWind;
                     Main.windSpeedTarget = Main._maxWind;
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 召唤了大风天", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Summoned the windy day", op.Name);
                 }
                 else
-                    op.SendInfoMessage("已经是大风天了~");
+                    op.SendInfoMessage("It's already a windy day~");
             }
             else
             {
@@ -206,10 +206,10 @@ namespace FishShop
                     Main.windSpeedCurrent = 0;
                     Main.windSpeedTarget = 0;
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 停止了大风天", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Stopped the windy day", op.Name);
                 }
                 else
-                    op.SendInfoMessage("现在不是大风天");
+                    op.SendInfoMessage("It's not a windy day now");
             }
         }
 
@@ -226,10 +226,10 @@ namespace FishShop
                     //BirthdayParty.PartyDaysOnCooldown = 5;
                     //BirthdayParty._wasCelebrating = on;
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 正在开派对", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} having a party", op.Name);
                 }
                 else
-                    op.SendInfoMessage("已经在开派对了~");
+                    op.SendInfoMessage("There's already a party~");
             }
             else
             {
@@ -238,10 +238,10 @@ namespace FishShop
                     BirthdayParty.GenuineParty = false;
                     //NPC.freeCake = false;
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 叫停了派对", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Stopped the party", op.Name);
                 }
                 else
-                    op.SendInfoMessage("没在开派对");
+                    op.SendInfoMessage("Not having a party");
             }
         }
 
@@ -256,11 +256,11 @@ namespace FishShop
                 {
                     Main.StartSlimeRain(false);
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 捅了史莱姆窝", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Stabbed the slime nest", op.Name);
                 }
                 else
                 {
-                    op.SendInfoMessage("已经在下史莱姆雨了~");
+                    op.SendInfoMessage("It’s already raining slime~");
                 }
             }
             else
@@ -269,11 +269,11 @@ namespace FishShop
                 {
                     Main.StopSlimeRain(false);
                     TSPlayer.All.SendData(PacketTypes.WorldInfo);
-                    TSPlayer.All.SendInfoMessage("{0} 让史莱姆军团撤退了", op.Name);
+                    TSPlayer.All.SendInfoMessage("{0} Let the slime army retreat", op.Name);
                 }
                 else
                 {
-                    op.SendInfoMessage("没在下史莱姆雨");
+                    op.SendInfoMessage("It’s not raining slime");
                 }
             }
         }
@@ -283,7 +283,7 @@ namespace FishShop
         {
             Star.starfallBoost = 4f;
             TSPlayer.All.SendData(PacketTypes.WorldInfo);
-            TSPlayer.All.SendInfoMessage("{0} 召唤了流星雨", op.Name);
+            TSPlayer.All.SendInfoMessage("{0} Summoned a meteor shower", op.Name);
         }
 
         // 陨石
@@ -292,7 +292,7 @@ namespace FishShop
             WorldGen.spawnMeteor = false;
             WorldGen.dropMeteor();
             TSPlayer.All.SendData(PacketTypes.WorldInfo);
-            TSPlayer.All.SendInfoMessage("{0} 召唤了陨石", op.Name);
+            TSPlayer.All.SendInfoMessage("{0} Summoned the meteorite", op.Name);
         }
 
         // 灯笼夜
@@ -303,7 +303,7 @@ namespace FishShop
                 LanternNight.ToggleManualLanterns();
                 TSPlayer.All.SendData(PacketTypes.WorldInfo);
             }
-            TSPlayer.All.SendInfoMessage("{0} 开启了灯笼夜", op.Name);
+            TSPlayer.All.SendInfoMessage("{0} Turn on the lantern night", op.Name);
         }
 
         // 人间日
@@ -333,18 +333,18 @@ namespace FishShop
             if (Main.invasionSize > 0)
             {
                 Main.invasionSize = 0;
-                TSPlayer.All.SendInfoMessage("{0} 跳过了入侵事件", player.Name);
+                TSPlayer.All.SendInfoMessage("{0} Intrusion event skipped", player.Name);
             }
             else
             {
-                player.SendInfoMessage("当前没有任何入侵事件");
+                player.SendInfoMessage("There are currently no intrusions");
             }
         }
         public static bool NeedBuyStopInvasion(TSPlayer player)
         {
             if(Main.invasionSize == 0)
             {
-                player.SendInfoMessage("当前没有任何入侵事件，无需购买");
+                player.SendInfoMessage("There are currently no intrusions, no purchase required");
                 return false;
             }
             return true;
@@ -359,17 +359,17 @@ namespace FishShop
                 switch (shopID)
                 {
                     case ShopItemID.InvasionGoblins:
-                        TSPlayer.All.SendInfoMessage("{0} 召唤了 哥布林军队", op.Name);
+                        TSPlayer.All.SendInfoMessage("{0} Summoned the Goblin Army", op.Name);
                         StartInvasion(1);
                         break;
 
                     case ShopItemID.InvasionSnowmen:
-                        TSPlayer.All.SendInfoMessage("{0} 召唤了 雪人军团", op.Name);
+                        TSPlayer.All.SendInfoMessage("{0} Summoned the Yeti Legion", op.Name);
                         StartInvasion(2);
                         break;
 
                     case ShopItemID.InvasionPirates:
-                        TSPlayer.All.SendInfoMessage("{0} 召唤了 海盗入侵", op.Name);
+                        TSPlayer.All.SendInfoMessage("{0} Summoned Pirate Invasion", op.Name);
                         StartInvasion(3);
                         break;
 
@@ -378,7 +378,7 @@ namespace FishShop
                         Main.bloodMoon = false;
                         NPC.waveKills = 0f;
                         NPC.waveNumber = wave;
-                        TSPlayer.All.SendInfoMessage("{0} 召唤了 南瓜月", op.Name);
+                        TSPlayer.All.SendInfoMessage("{0} Summoned Pumpkin Moon", op.Name);
                         break;
 
                     case ShopItemID.InvasionFrostmoon:
@@ -386,11 +386,11 @@ namespace FishShop
                         Main.bloodMoon = false;
                         NPC.waveKills = 0f;
                         NPC.waveNumber = wave;
-                        TSPlayer.All.SendInfoMessage("{0} 召唤了 霜月", op.Name);
+                        TSPlayer.All.SendInfoMessage("{0} Summoned Frost Moon", op.Name);
                         break;
 
                     case ShopItemID.InvasionMartians:
-                        TSPlayer.All.SendInfoMessage("{0} 召唤了 火星暴乱", op.Name);
+                        TSPlayer.All.SendInfoMessage("{0} Summoned the Martian Riot", op.Name);
                         StartInvasion(4);
                         break;
                 }
@@ -399,11 +399,11 @@ namespace FishShop
             {
                 //DD2Event.StopInvasion();
                 //TSPlayer.All.SendInfoMessage("{0} 终止了 撒旦军队", op.Name);
-                op.SendInfoMessage("已有撒旦军队在进行");
+                op.SendInfoMessage("Satan's army is already underway");
             }
             else
             {
-                op.SendInfoMessage("已有入侵在进行");
+                op.SendInfoMessage("There is an invasion in progress");
             }
         }
 
@@ -435,12 +435,12 @@ namespace FishShop
             }
             else if (DD2Event.Ongoing)
             {
-                op.SendInfoMessage("已有撒旦军队在进行");
+                op.SendInfoMessage("Satan's army is already underway");
                 return false;
             }
             else
             {
-                op.SendInfoMessage("已有入侵在进行");
+                op.SendInfoMessage("There is an invasion in progress");
                 return false;
             }
             return true;
@@ -457,7 +457,7 @@ namespace FishShop
             // SpawnBossRaw( new CommandArgs("", player, args ) );
             if( string.IsNullOrEmpty(rawCmd) )
             {
-                op.SendInfoMessage("指令内容为空");
+                op.SendInfoMessage("The command content is empty");
                 return;
             }
 
@@ -474,17 +474,17 @@ namespace FishShop
                 if (Main.player[i].active && (Main.player[i] != op.TPlayer))
                 {
                     if (TShock.Players[i].Teleport(op.TPlayer.position.X, op.TPlayer.position.Y))
-                        TShock.Players[i].SendSuccessMessage(string.Format("{0} 将你传送到他身边", op.Name));
+                        TShock.Players[i].SendSuccessMessage(string.Format("{0} Teleport you to him", op.Name));
                 }
             }
-            TSPlayer.All.SendInfoMessage($"{op.Name} 购买了 集合打团，将所有玩家召唤到他身边");
+            TSPlayer.All.SendInfoMessage($"{op.Name} Purchased to gather for a group fight and summon all players to his side"");
         }
 
         // 集体庆祝
         public static void CelebrateAll(TSPlayer op)
         {
             Jump(op);
-            TSPlayer.All.SendInfoMessage($"{op.Name} 购买了集体庆祝");
+            TSPlayer.All.SendInfoMessage($"{op.Name} Purchased for collective celebration");
         }
 
         #region 烟花起飞
