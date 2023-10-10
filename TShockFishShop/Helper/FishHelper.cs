@@ -96,7 +96,7 @@ namespace FishShop
                 player.SendInfoMessage($"Mission fish: The fisherman is not present");
             }
 
-            player.SendInfoMessage($"Moon phases: {utils.moonPhases[Main.moonPhase]}");
+            player.SendInfoMessage($"Moon phases: {utils.Moonphases[Main.Moonphase]}");
 
             // 时间
             double time = Main.time / 3600.0;
@@ -169,7 +169,7 @@ namespace FishShop
         {
             if( index<0 || index>7 )
                 return;
-            string name = utils.moonPhases[index];
+            string name = utils.Moonphases[index];
             Main.dayTime = false;
             Main.moonPhase = index;
             Main.time = 0.0;
