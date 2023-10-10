@@ -27,4 +27,4 @@ jobs:
         with:
           name: FishShop
           path: |
-            ./src/bin/Debug/net6.0/
+            ./TShockFishShop/bin/Debug/net6.0/
