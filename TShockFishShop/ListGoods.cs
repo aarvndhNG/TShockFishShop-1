@@ -78,7 +78,7 @@ namespace FishShop
             }
             else
             {
-                msg = $"$"[c/96FF0A: Welcome to [{_config.name}], shelf ({pageNum}/{totalPage}): ]\n" + msg;
+                msg = $"[c/96FF0A: Welcome to [{_config.name}], shelf ({pageNum}/{totalPage}): ]\n" + msg;
             }
 
             if (args.Player != null)
