@@ -670,7 +670,7 @@ namespace FishShop
 
                 default:
                     TSPlayer.Server.SetTime(false, 0.0);
-                    npc = TShock.Utils.GetNPCByIdOrName(args.Parameters[0]);
+                    npc = TShock.Utils.GetNPCByIdOrName(args.Parameters[0]).FirstOrDefault();
                     if (npc.Count == 0)
                     {
                         args.Player.SendErrorMessage("Invalid boss name!");
