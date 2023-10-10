@@ -670,13 +670,15 @@ namespace FishShop
 
                 default:
                     TSPlayer.Server.SetTime(false, 0.0);
-                    npc = TShock.Utils.GetNPCByIdOrName(args.Parameters[0]).FirstOrDefault();
-                    if (npc.Count == 0)
+                    List<NPC> npcList = TShock.Utils.GetNPCByIdOrName(args.Parameters[0]);
+                    
+                    if (npcList.Count == 0)
                     {
                         args.Player.SendErrorMessage("Invalid boss name!");
                         return;
                     }
-                    npcID = npc[0].netID;
+                    npc = npcList.FirstOrDefault();
+                    npcID = npc.netID;
                     break;
             }
 
@@ -695,6 +697,33 @@ namespace FishShop
             {
                 TSPlayer.All.SendSuccessMessage(message, args.Player.Name, amount, spawnName);
             }
+        }
+
+
+        public static void AttackBoss(TSPlayer op, NPC npc) {
+            // itemid projectileid
+            // 279 48
+            // 3197 520
+            Item item = new();
+            item.SetDefaults(3197);
+            Vector2 pos = new(npc.position.X + (float)(npc.width * 0.5), npc.position.Y + (float)(npc.height * 0.5));
+            Vector2 vel = new(20, 0);
+            int pIndex = Projectile.NewProjectile(op.TPlayer.GetProjectileSource_Item(item), pos, vel, 520, 1, 0f, op.Index);
+            Main.projectile[pIndex].ai[0] = 2f;
+            Main.projectile[pIndex].timeLeft = 10;
+            Main.projectile[pIndex].friendly = true;
+            //Main.projectile[pIndex].penetrate = 3;
+            //Main.projectile[pIndex].ranged = true;
+            //Main.projectile[pIndex].coldDamage = true;
+            NetMessage.SendData(27, -1, -1, null, pIndex);
+        }
+
+        public static bool AnyBoss() {
+            foreach (NPC npc in Main.npc) {
+                if (npc != null && npc.active && npc.boss)
+                    return true;
+            }
+            return false;
         }
     }
 }
