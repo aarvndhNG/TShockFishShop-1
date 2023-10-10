@@ -15,17 +15,17 @@ namespace FishShop
                 time = timeLimit;
 
             op.SetBuff(id, time * 60);
-            op.SendSuccessMessage($"你获得 [c/96FF96:{TShock.Utils.GetBuffName(id)}] ({TShock.Utils.GetBuffDescription(id)}) {GetTimeDesc(time)}");
+            op.SendSuccessMessage($"You get [c/96FF96:{TShock.Utils.GetBuffName(id)}] ({TShock.Utils.GetBuffDescription(id)}) {GetTimeDesc(time)}");
         }
 
         public static string GetTimeDesc(int seconds)
         {
-            if (seconds == -1) return "不限时";
+            if (seconds == -1) return "No time limit";
             else if (seconds == 1) return "";
-            else if (seconds < 60) return $"{seconds}秒";
-            else if (seconds < 60 * 60) return $"{(int)Math.Floor((float)seconds / 60)}分钟";
-            else if (seconds < 60 * 60 * 60) return $"{(int)Math.Floor((float)seconds / (60 * 60))}小时";
-            else if (seconds < 60 * 60 * 60 * 24) return $"{(int)Math.Floor((float)seconds / (60 * 60 * 24))}天";
+            else if (seconds < 60) return $"{seconds} seconds";
+            else if (seconds < 60 * 60) return $"{(int)Math.Floor((float)seconds / 60)}minute";
+            else if (seconds < 60 * 60 * 60) return $"{(int)Math.Floor((float)seconds / (60 * 60))}Hour";
+            else if (seconds < 60 * 60 * 60 * 24) return $"{(int)Math.Floor((float)seconds / (60 * 60 * 24))}sky";
             else return "";
         }
 
