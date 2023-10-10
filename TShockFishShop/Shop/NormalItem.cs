@@ -1,38 +1,37 @@
-﻿using Terraria;
+using Terraria;
 using TShockAPI;
 
-namespace FishShop.Shop;
-
-public class NormalItem : ShopItem
+namespace FishShop.Shop
 {
-    public NormalItem(ShopItemData si) : base(si)
+    public class NormalItem : ShopItem
     {
-    }
-
-    public override string CanBuy()
-    {
-        var msg = base.CanBuy();
-        if (msg != "") return msg;
-
-        // 坠落之星白天买会消失
-        if (shopItemData.id == 75 && Main.dayTime)
+        public NormalItem(ShopItemData si) : base(si)
         {
-            return "坠落之星 只能在晚上购买！";
         }
 
-        if (!op.InventorySlotAvailable)
+        public override string CanBuy()
         {
-            return "背包已满，不能购买！";
+            var msg = base.CanBuy();
+            if (msg != "") return msg;
+
+            // Fallen Stars can only be bought at night
+            if (shopItemData.id == 75 && Main.dayTime)
+            {
+                return "You can only purchase Fallen Stars at night!";
+            }
+
+            if (!op.InventorySlotAvailable)
+            {
+                return "Your inventory is full, you cannot make the purchase!";
+            }
+
+            return "";
         }
 
-        return "";
+        public override void ProvideGoods()
+        {
+            // Provide the item
+            op.GiveItem(shopItemData.id, shopItemData.stack * amount, shopItemData.GetPrefixInt());
+        }
     }
-
-    public override void ProvideGoods()
-    {
-        // 下发物品
-        op.GiveItem(shopItemData.id, shopItemData.stack * amount, shopItemData.GetPrefixInt());
-    }
-
-
 }
