@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -42,7 +42,7 @@ namespace FishShop
             DumpPrefixes(paths[4]);
             //DumpProjectiles(paths[5]);
 
-            op.SendInfoMessage($"已生成参考文档:\n{string.Join("\n", paths)}");
+            op.SendInfoMessage($"Reference document generated:\n{string.Join("\n", paths)}");
 
             if (needRecover)
                 LanguageManager.Instance.SetLanguage(culture);
@@ -52,7 +52,7 @@ namespace FishShop
         {
             Regex newLine = new Regex(@"\n");
             StringBuilder buffer = new StringBuilder();
-            buffer.AppendLine("id,名称,描述");
+            buffer.AppendLine("id,name, description");
 
             for (int i = 1; i < ItemID.Count; i++)
             {
@@ -74,7 +74,7 @@ namespace FishShop
         private static void DumpNPCs(string path)
         {
             StringBuilder buffer = new StringBuilder();
-            buffer.AppendLine("id,名称");
+            buffer.AppendLine("id,name");
 
             for (int i = -65; i < NPCID.Count; i++)
             {
@@ -92,7 +92,7 @@ namespace FishShop
         private static void DumpBuffs(string path)
         {
             StringBuilder buffer = new StringBuilder();
-            buffer.AppendLine("id,名称,描述");
+            buffer.AppendLine("id,name, description");
 
             for (int i = 0; i < BuffID.Count; i++)
             {
@@ -108,7 +108,7 @@ namespace FishShop
         private static void DumpPrefixes(string path)
         {
             StringBuilder buffer = new StringBuilder();
-            buffer.AppendLine("id,名称");
+            buffer.AppendLine("id,name");
             for (int i = 0; i < PrefixID.Count; i++)
             {
                 string prefix = Lang.prefix[i].ToString();
