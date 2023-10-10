@@ -1,96 +1,94 @@
-﻿using System;
+using System;
 using TShockAPI;
 
-namespace FishShop;
-
-public partial class Plugin
+namespace FishShop
 {
-    // 查看商店
-    static void ListGoods(CommandArgs args)
+    public partial class Plugin
     {
-        if (!ShopIsReady(args.Player))
+        // View the shop
+        static void ListGoods(CommandArgs args)
         {
-            return;
-        }
-
-        // 更新货架
-        float num = (float)_config.shop.Count / _config.pageSlots;
-        int totalPage = (int)Math.Ceiling(num);
-
-        // 输入的页码
-        if (args.Parameters.Count > 1 && int.TryParse(args.Parameters[1], out int pageNum))
-        {
-            if (pageNum > totalPage)
+            if (!ShopIsReady(args.Player))
             {
-                pageNum = totalPage;
+                return;
             }
-            else if (pageNum <= 0)
+
+            // Update the shelf
+            float num = (float)_config.shop.Count / _config.pageSlots;
+            int totalPage = (int)Math.Ceiling(num);
+
+            // Input page number
+            if (args.Parameters.Count > 1 && int.TryParse(args.Parameters[1], out int pageNum))
+            {
+                if (pageNum > totalPage)
+                {
+                    pageNum = totalPage;
+                }
+                else if (pageNum <= 0)
+                {
+                    pageNum = 1;
+                }
+            }
+            else
             {
                 pageNum = 1;
             }
-        }
-        else
-        {
-            pageNum = 1;
-        }
 
+            int totalSlots = _config.pageSlots * pageNum;
 
-        int totalSlots = _config.pageSlots * pageNum;
-
-
-        // 显示指定页的内容
-        string msg = "";
-        int rowCount = 0;
-        int pageCount = 0;
-        int totalCount = 0;
-        int startSlot = _config.pageSlots * (pageNum - 1);
-        for (int i = 0; i < _config.shop.Count; i++)
-        {
-            if (i < startSlot)
+            // Display content of the specified page
+            string msg = "";
+            int rowCount = 0;
+            int pageCount = 0;
+            int totalCount = 0;
+            int startSlot = _config.pageSlots * (pageNum - 1);
+            for (int i = 0; i < _config.shop.Count; i++)
             {
-                continue;
+                if (i < startSlot)
+                {
+                    continue;
+                }
+
+                rowCount++;
+                pageCount++;
+
+                msg += $"{_config.shop[i].GoodsName()}  ";
+
+                totalCount = i + 1;
+                if (i >= (totalSlots - 1))
+                {
+                    break;
+                }
+
+                if (rowCount != 1 && rowCount == _config.rowSlots)
+                {
+                    rowCount = 0;
+                    msg += "\n";
+                }
             }
 
-            rowCount++;
-            pageCount++;
-
-            msg += $"{_config.shop[i].GoodsName()}  ";
-
-            totalCount = i + 1;
-            if (i >= (totalSlots - 1))
+            if (totalCount < _config.shop.Count)
             {
-                break;
+                msg += $"\n[c/96FF0A:Enter /fish list {pageNum + 1} to see more.]";
             }
 
-            if (rowCount != 1 && rowCount == _config.rowSlots)
+            if (msg == "")
             {
-                rowCount = 0;
-                msg += "\n";
+                msg = "Today, we're just here to be cute, not to sell anything! ɜː";
             }
-        }
+            else
+            {
+                msg = $"[c/96FF0A:Welcome to &#8203;``oaicite:{"number":1,"invalid_reason":"Malformed citation 【{_config.name}】"}``&#8203; Shelf ({pageNum}/{totalPage}): ]\n" + msg;
+            }
 
-        if (totalCount < _config.shop.Count)
-        {
-            msg += $"\n[c/96FF0A:输入 /fish list {pageNum + 1} 查看更多.]";
-        }
-
-        if (msg == "")
-        {
-            msg = "今天卖萌，不卖货！ɜː";
-        }
-        else
-        {
-            msg = $"[c/96FF0A:欢迎光临【{_config.name}】,货架 ({pageNum}/{totalPage}): ]\n" + msg;
-        }
-
-        if (args.Player != null)
-        {
-            args.Player.SendInfoMessage(msg);
-        }
-        else
-        {
-            utils.Log(msg);
+            if (args.Player != null)
+            {
+                args.Player.SendInfoMessage(msg);
+            }
+            else
+            {
+                utils.Log(msg);
+            }
         }
     }
-
 }
